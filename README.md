@@ -1,4 +1,4 @@
-# MATLAB code for Fourier series handling (with FFT)
+# MATLAB Code for Fourier Series Handling (with FFT)
 
 The **MATLAB FFT/IFFT** functions are good but not so easy to use for real periodic signal:
 * the ordering of the frequency vector is confusing due to the negative frequencies (spectrums are symmetric)
