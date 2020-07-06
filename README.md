@@ -9,12 +9,14 @@ The provided **MATLAB** functions offer different functionalities around **Fouri
 * wrappers around the MATLAB **FFT/IFFT** functions that scale periodic signals as Fourier series coefficients
 * generate spectrum of **PWM periodic signal** (with finite or infinite slew rate) directly in the frequency domain
 
+## Example
+
+Look at the examples [test_example_simple.m](test_example_simple.m) and [test_example_pwm.m](test_example_pwm.m).
+
 <p float="middle">
     <img src="readme_img/example_simple.png" width="400">
     <img src="readme_img/example_pwm.png" width="400">
 </p>
-
-Look at the examples [test_example_simple.m](test_example_simple.m) and [test_example_pwm.m](test_example_pwm.m).
 
 ## Compatibility
 
