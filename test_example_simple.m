@@ -1,12 +1,14 @@
-clear('all');
+function test_example_simple()
+
 close('all');
 addpath('fct');
 
-%% param
+%% parameters
 n_time = 100; % number of frequencies
 n_freq = 5; % number of time samples
 
 f = 50; % fundamental frequency of the PWM signal
+
 sig_freq_original = [5 3 0 3i 1]; % frequency spectrum
 
 %% get time and frequency vector
@@ -32,3 +34,5 @@ xlabel('f [Hz]')
 ylabel('sig [a.u.]')
 legend('orignal', 'reconstruction')
 title('Frequency Domain')
+
+end
