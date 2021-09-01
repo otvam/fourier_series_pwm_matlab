@@ -7,10 +7,11 @@ function sig_freq = get_lp2(sig_freq, f, fn, ksi, n_freq)
 %   n_freq - number of frequency (scalar / integer)
 %   sig_freq - matrix of row frequency vectors  (matrix / double)
 %
+%   The function can be used in order to avoid Gibbs phenomenon with
+%   discontinuous signal (ensuring continuity);
+%
 %   See also GET_LP_1.
 
-%   Thomas Guillod.
-%   2020-2021 - BSD License.
 %   Thomas Guillod.
 %   2020-2021 - BSD License.
 
