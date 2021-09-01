@@ -7,7 +7,8 @@ The **MATLAB FFT/IFFT** functions are good but not so easy to use for real perio
 The provided **MATLAB** functions offer different functionalities around **Fourier series**:
 * get time and frequency vector
 * wrappers around the MATLAB **FFT/IFFT** functions that scale periodic signals as Fourier series coefficients
-* generate spectrum of arbitrary **PWM periodic signal** (including finite slew rate) directly in the frequency domain
+* generate spectrum of arbitrary **PWM periodic signal** directly in the frequency domain
+* generate PWM signals with a finite slew rate
 * apply low-pass filters to the signal in the frequency domain
 
 ## Example
