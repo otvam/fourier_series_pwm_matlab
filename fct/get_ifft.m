@@ -1,7 +1,7 @@
 function sig_time = get_ifft(sig_freq, n_time)
 %GET_IFFT Get the IFFT of a vector (or matrix of row vectors).
 %   sig_freq - matrix of row frequency vectors  (matrix / double)
-%   n_freq - number of frequency including DC component (scalar / integer / empty for default value)
+%   n_time - number of time samples (scalar / integer / empty for default value)
 %   sig_time - matrix of row time vectors  (matrix / double)
 %
 %   This code can make the IFFT of a row vector or a matrix (of row vectors).

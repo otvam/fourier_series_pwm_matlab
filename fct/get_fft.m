@@ -1,8 +1,7 @@
 function sig_freq = get_fft(sig_time, n_freq)
 %GET_FFT Get the FFT of a real vector (or matrix of row vectors).
-%   sig_freq = GET_FFT(sig_time, n_freq)
 %   sig_time - matrix of row time vectors  (matrix / double)
-%   n_time - number of time samples (scalar / integer / empty for default value)
+%   n_freq - number of frequency (scalar / integer / empty for default value)
 %   sig_freq - matrix of row frequency vectors  (matrix / double)
 %
 %   This code can make the FFT of a row vector or a matrix (of row vectors).

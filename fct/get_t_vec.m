@@ -5,7 +5,10 @@ function t_vec = get_t_vec(f, n_time)
 %   n_time - number of time samples (scalar / integer)
 %   t_vec - time vector (row vector / double)
 %
-%   See also GET_F_VEC, GET_FFT, GET_IFFT, GET_DFT_PWM.
+%   Note: The last time point (1/f) is not included is the vector.
+%         Including this point would lead to aliasing for the FFT.
+%
+%   See also GET_F_VEC, GET_FFT, GET_IFFT.
 
 %   Thomas Guillod.
 %   2020-2021 - BSD License.

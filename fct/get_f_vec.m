@@ -2,10 +2,12 @@ function f_vec = get_f_vec(f, n_freq)
 %GET_F_VEC Get the frequency vector (including DC component).
 %   f_vec = GET_F_VEC(f, n)
 %   f - fundamental frequency (scalar / double)
-%   n_freq - number of frequency including DC component (scalar / integer)
+%   n_freq - number of frequency (scalar / integer)
 %   f_vec - frequency vector (row vector / double)
 %
-%   See also GET_T_VEC, GET_FFT, GET_IFFT, GET_DFT_PWM.
+%   Note: The DC component is included.
+%
+%   See also GET_T_VEC, GET_FFT, GET_IFFT.
 
 %   Thomas Guillod.
 %   2020-2021 - BSD License.
