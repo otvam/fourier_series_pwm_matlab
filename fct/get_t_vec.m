@@ -8,7 +8,7 @@ function t_vec = get_t_vec(f, n_time)
 %   See also GET_F_VEC, GET_FFT, GET_IFFT, GET_DFT_PWM.
 
 %   Thomas Guillod.
-%   2020 - BSD License.
+%   2020-2021 - BSD License.
 
 d_vec = (0:(n_time-1))./n_time;
 t_vec = (1./f).*d_vec;

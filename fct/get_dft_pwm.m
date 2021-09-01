@@ -27,7 +27,7 @@ function sig_freq = get_dft_pwm(duty, n_freq)
 %   See also GET_F_VEC, GET_T_VEC, GET_FFT, GET_IFFT.
 
 %   Thomas Guillod.
-%   2020 - BSD License.
+%   2020-2021 - BSD License.
 
 % extract
 for i=1:length(duty)

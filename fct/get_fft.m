@@ -19,7 +19,7 @@ function sig_freq = get_fft(sig_time, n_freq)
 %   See also GET_F_VEC, GET_T_VEC, GET_IFFT, GET_DFT_PWM.
 
 %   Thomas Guillod.
-%   2020 - BSD License.
+%   2020-2021 - BSD License.
 
 % get the FFT with the MATLAB function
 sig_freq = fft(sig_time, [], 2);

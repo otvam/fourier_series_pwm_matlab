@@ -18,7 +18,7 @@ function sig_time = get_ifft(sig_freq, n_time)
 %   See also GET_F_VEC, GET_T_VEC, GET_FFT, GET_DFT_PWM.
 
 %   Thomas Guillod.
-%   2020 - BSD License.
+%   2020-2021 - BSD License.
 
 % scale the DC coefficient
 sig_freq(:,1) = 2.*sig_freq(:,1);

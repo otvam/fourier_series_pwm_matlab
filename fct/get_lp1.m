@@ -22,7 +22,7 @@ function sig_freq = get_lp1(sig_freq, f, fn, n_freq)
 %   See also GET_F_VEC, GET_T_VEC, GET_FFT, GET_IFFT.
 
 %   Thomas Guillod.
-%   2020 - BSD License.
+%   2020-2021 - BSD License.
 
 % get the frequency vector
 f_vec = get_f_vec(f, n_freq);

@@ -1,4 +1,8 @@
 function test_example_pwm()
+%TEST_EXAMPLE_PWM Example for DFT/FFT/IFFT with PWM signals.
+%
+%   Thomas Guillod.
+%   2020-2021 - BSD License.
 
 close('all');
 addpath('fct');
@@ -46,7 +50,7 @@ subplot(2,1,2)
 bar(f_vec, abs([sig_freq_dft ; sig_freq_fft].'))
 xlabel('f [Hz]')
 ylabel('sig [a.u.]')
-legend('orignal DFT', 'IFFT/FFT reconstruction')
+legend('original DFT', 'IFFT/FFT reconstruction')
 title('Frequency Domain')
 
 end
