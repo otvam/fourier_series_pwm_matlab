@@ -35,10 +35,24 @@ d_all_vec = [d_vec(1:end) d_vec(1)+1];
 dr_all_vec = [dr_vec(1:end) dr_vec(1)];
 v_all_vec = [v_vec(end) v_vec];
 
+% compute the switching instants (start and end)
+d_sw_vec = [];
+for i=1:length(duty)
+    d_1 = d_all_vec(i);
+    d_2 = d_all_vec(i+1);
+    dr_1 = dr_all_vec(i);
+    dr_2 = dr_all_vec(i+1);
+
+    d_sw_vec(end+1) = d_1+dr_1./2;
+    d_sw_vec(end+1) = d_2-dr_2./2;
+end
+
 % check data
-assert(all(dr_vec>0),'root_error','invalid data')
-assert(all(d_vec>=0),'root_error','invalid data')
-assert(all(d_vec<=1),'root_error','invalid data')
+assert(all(dr_vec>0), 'invalid duty cycle: transition')
+assert(all(dr_vec<=1), 'invalid duty cycle: transition')
+assert(all(d_vec>=0), 'invalid duty cycle: switching instant')
+assert(all(d_vec<=1), 'invalid duty cycle: switching instant')
+assert(all(diff(d_sw_vec)>=0), 'invalid duty cycle: signal sequence')
 
 % init data
 n_vec = (0:n_freq-1);
