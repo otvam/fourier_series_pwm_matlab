@@ -48,7 +48,7 @@ for i=1:length(duty)
 end
 
 % check data
-assert(all(dr_vec>0), 'invalid duty cycle: transition')
+assert(all(dr_vec>=0), 'invalid duty cycle: transition')
 assert(all(dr_vec<=1), 'invalid duty cycle: transition')
 assert(all(d_vec>=0), 'invalid duty cycle: switching instant')
 assert(all(d_vec<=1), 'invalid duty cycle: switching instant')
@@ -77,7 +77,11 @@ for i=1:length(duty)
     v_1 = v_all_vec(i);
     v_2 = v_all_vec(i+1);
     
-    sig_tmp = coeff_ramp(n_vec, d, dr, v_1, v_2);
+    if dr==0
+        sig_tmp = zeros(1, n_freq);
+    else
+        sig_tmp = coeff_ramp(n_vec, d, dr, v_1, v_2);
+    end
     sig_freq = sig_freq+sig_tmp;
 end
 
