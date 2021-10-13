@@ -1,6 +1,11 @@
 function test_example_simple()
-%TEST_EXAMPLE_PWM Example for FFT/IFFT with arbitrary signals.
+%TEST_EXAMPLE_SIMPLE Example for FFT/IFFT with arbitrary signals.
 %
+%   Define arbitrary frequency domain signals.
+%   Compute the IFFT.
+%   Compute the FFT.
+%   Compare the orginal signals with the IFFT/FFT reconstruction.
+
 %   Thomas Guillod.
 %   2020-2021 - BSD License.
 
@@ -8,8 +13,8 @@ close('all');
 addpath('fct');
 
 %% parameters
-n_time = 100; % number of frequencies
-n_freq = 5; % number of time samples
+n_time = 100; % number of time samples
+n_freq = 5; % number of time frequencies
 
 f = 50; % fundamental frequency of the PWM signal
 

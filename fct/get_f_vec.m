@@ -1,6 +1,5 @@
 function f_vec = get_f_vec(f, n_freq)
 %GET_F_VEC Get the frequency vector (including DC component).
-%   f_vec = GET_F_VEC(f, n)
 %   f - fundamental frequency (scalar / double)
 %   n_freq - number of frequency (scalar / integer)
 %   f_vec - frequency vector (row vector / double)

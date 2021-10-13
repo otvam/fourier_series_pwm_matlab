@@ -15,7 +15,7 @@ function sig_time = get_ifft(sig_freq, n_time)
 %   The time domain signal is accepted to be real.
 %   For using the default number of samples, n_time can be empty.
 %
-%   See also GET_F_VEC, GET_T_VEC, GET_FFT, GET_DFT_PWM.
+%   See also GET_F_VEC, GET_T_VEC, GET_FFT.
 
 %   Thomas Guillod.
 %   2020-2021 - BSD License.

@@ -1,5 +1,5 @@
 function sig_freq = get_dft_pwm(duty, n_freq)
-%GET_DFT_PWM Get the Fourier series on a PWM signal with finite rise time.
+%GET_DFT_PWM Get the Fourier series of a PWM signal with finite rise time.
 %   duty - description of the signal (cell of structs)
 %       - duty{i}.d - duty cycle where a switching transition is happening
 %       - duty{i}.dr - duration of the switching transition

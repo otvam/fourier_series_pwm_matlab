@@ -1,5 +1,5 @@
-function sig_freq = get_lp2(sig_freq, f, fn, ksi, n_freq)
-%GET_LP_1 Apply a second-order low-pass to a frequency signal.
+function sig_freq = get_filter_lp2(sig_freq, f, fn, ksi, n_freq)
+%GET_FILTER_LP_2 Apply a second-order low-pass to a frequency signal.
 %   sig_freq - matrix of row frequency vectors  (matrix / double)
 %   f - fundamental frequency of the PWM signal (scalar / double)
 %   fn - corner frequency of the second-order low-pass (scalar / double)
@@ -10,7 +10,7 @@ function sig_freq = get_lp2(sig_freq, f, fn, ksi, n_freq)
 %   The function can be used in order to avoid Gibbs phenomenon with
 %   discontinuous signal (ensuring continuity);
 %
-%   See also GET_LP_1.
+%   See also GET_FILTER_LP_1.
 
 %   Thomas Guillod.
 %   2020-2021 - BSD License.

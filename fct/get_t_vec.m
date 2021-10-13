@@ -1,6 +1,5 @@
 function t_vec = get_t_vec(f, n_time)
 %GET_T_VEC Get the time vector of a fundamental period.
-%   t_vec = GET_T_VEC(f, n)
 %   f - fundamental frequency (scalar / double)
 %   n_time - number of time samples (scalar / integer)
 %   t_vec - time vector (row vector / double)

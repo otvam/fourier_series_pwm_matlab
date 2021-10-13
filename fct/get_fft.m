@@ -15,7 +15,7 @@ function sig_freq = get_fft(sig_time, n_freq)
 %   The time domain signal is accepted to be real.
 %   For using the default number of frequency, n_freq can be empty.
 %
-%   See also GET_F_VEC, GET_T_VEC, GET_IFFT, GET_DFT_PWM.
+%   See also GET_F_VEC, GET_T_VEC, GET_IFFT.
 
 %   Thomas Guillod.
 %   2020-2021 - BSD License.

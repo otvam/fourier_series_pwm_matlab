@@ -9,14 +9,16 @@ The provided **MATLAB** functions offer different functionalities around **Fouri
 * wrappers around the MATLAB **FFT/IFFT** functions that scale periodic signals as Fourier series coefficients
 * many signals can be processed at the same time (matrices)
 
-Additionally, the following functions are offered for PWM signals (periodic pulses):
+The following functions are offered for signal generation:
 * generate spectrum of arbitrary **PWM periodic signals** directly in the frequency domain
-* generate PWM signals with a finite slew rate
-* apply low-pass filters to the signal in the frequency domain
+* generate PWM signals with a **finite/infinite slew rate**
+* generate **DC and AC sinusoidal signals**
+
+Additionally, several transformations can be applied to frequency domain signals: 
+* apply low-pass filters (e.g., first-order, second-order)
+* apply simple transformations (eg., delay, phase shift, AC coupling)
 
 ## Examples
-
-Look at the examples [test_example_simple.m](test_example_simple.m) and [test_example_pwm.m](test_example_pwm.m).
 
 <p float="middle">
     <img src="readme_img/example_simple.png" width="400">

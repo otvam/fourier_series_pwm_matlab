@@ -1,6 +1,12 @@
 function test_example_pwm()
 %TEST_EXAMPLE_PWM Example for DFT/FFT/IFFT with PWM signals.
 %
+%   Create a PWM signal in frequency domain.
+%   Apply low pass filters to the signal.
+%   Compute the IFFT.
+%   Compute the FFT.
+%   Compare the orginal signal with the IFFT/FFT reconstruction.
+
 %   Thomas Guillod.
 %   2020-2021 - BSD License.
 
@@ -8,8 +14,8 @@ close('all');
 addpath('fct');
 
 %% parameters
-n_time = 1e3; % number of frequencies
-n_freq = 50; % number of time samples
+n_time = 1e3; % number of time samples
+n_freq = 50; % number of time frequencies
 
 f = 50; % fundamental frequency of the PWM signal
 
@@ -30,8 +36,8 @@ f_vec = get_f_vec(f, n_freq);
 sig_freq_dft = get_dft_pwm(duty, n_freq);
 
 %% apply filters
-sig_freq_dft = get_lp1(sig_freq_dft, f, fn_lp1, n_freq);
-sig_freq_dft = get_lp2(sig_freq_dft, f, fn_lp2, ksi_lp2, n_freq);
+sig_freq_dft = get_filter_lp1(sig_freq_dft, f, fn_lp1, n_freq);
+sig_freq_dft = get_filter_lp2(sig_freq_dft, f, fn_lp2, ksi_lp2, n_freq);
 
 %% ifft/fft
 sig_time = get_ifft(sig_freq_dft, n_time);
