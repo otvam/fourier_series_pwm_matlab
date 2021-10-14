@@ -1,9 +1,8 @@
-function sig_freq = get_dft_pwm(duty, n_freq)
+function sig_freq = get_dft_pwm(d_vec, v_vec, dr_vec, n_freq)
 %GET_DFT_PWM Get the Fourier series of a PWM signal with finite rise time.
-%   duty - description of the signal (cell of structs)
-%       - duty{i}.d - duty cycle where a switching transition is happening
-%       - duty{i}.dr - duration of the switching transition
-%       - duty{i}.v - value of the signal after the switching transition
+%   d_vec - duty cycles where a switching transition is happening (row vector / double)
+%   v_vec - values of the signal after the switching transition (row vector / double)
+%   dr_vec - durations of the switching transition (row vector / double)
 %   n_freq - number of frequency (scalar / integer)
 %   sig_freq - row frequency vectors  (row vector / double)
 %
@@ -24,11 +23,9 @@ function sig_freq = get_dft_pwm(duty, n_freq)
 %   2020-2021 - BSD License.
 
 % extract the signal data
-for i=1:length(duty)
-    d_vec(i) = duty{i}.d;
-    dr_vec(i) = duty{i}.dr;
-    v_vec(i) = duty{i}.v;
-end
+assert(length(d_vec)==length(v_vec), 'invalid duty cycle: transition')
+assert(length(d_vec)==length(dr_vec), 'invalid duty cycle: transition')
+n_segment =  length(d_vec);
 
 % extend the signal (signal is periodic)
 d_all_vec = [d_vec(1:end) d_vec(1)+1];
@@ -37,7 +34,7 @@ v_all_vec = [v_vec(end) v_vec];
 
 % compute the switching instants (start and end)
 d_sw_vec = [];
-for i=1:length(duty)
+for i=1:n_segment
     d_1 = d_all_vec(i);
     d_2 = d_all_vec(i+1);
     dr_1 = dr_all_vec(i);
@@ -59,7 +56,7 @@ n_vec = (0:n_freq-1);
 sig_freq = zeros(1, n_freq);
 
 % add the constant intervals
-for i=1:length(duty)
+for i=1:n_segment
     d_1 = d_all_vec(i);
     d_2 = d_all_vec(i+1);
     dr_1 = dr_all_vec(i);
@@ -71,7 +68,7 @@ for i=1:length(duty)
 end
 
 % add the transitions
-for i=1:length(duty)
+for i=1:n_segment
     d = d_vec(i);
     dr = dr_vec(i);
     v_1 = v_all_vec(i);

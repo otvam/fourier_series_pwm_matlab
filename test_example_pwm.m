@@ -19,10 +19,9 @@ n_freq = 50; % number of time frequencies
 
 f = 50; % fundamental frequency of the PWM signal
 
-duty = {}; % cell containing the PWM signal description
-duty{end+1} = struct('d', 0.25, 'v', +5.0, 'dr', 0.05); % 1st transition / segment
-duty{end+1} = struct('d', 0.50, 'v', -3.0, 'dr', 0.05); % 2nd transition / segment
-duty{end+1} = struct('d', 0.75, 'v', -2.0, 'dr', 0.10); % 3rd transition / segment
+d_vec = [0.25 0.5 0.75]; % duty cycle vector
+v_vec = [+5.0 -3.0 -2.0]; % signal value vector
+dr_vec = [0.05 0.05 0.1]; % rise time vector
 
 fn_lp1 = 3e3; % corner frequency of the first-order low-pass applied to the signal
 fn_lp2 = 3e3; % corner frequency of the second-order low-pass applied to the signal
@@ -33,7 +32,7 @@ t_vec = get_t_vec(f, n_time);
 f_vec = get_f_vec(f, n_freq);
 
 %% get PWM with DFT
-sig_freq_dft = get_dft_pwm(duty, n_freq);
+sig_freq_dft = get_dft_pwm(d_vec, v_vec, dr_vec, n_freq);
 
 %% apply filters
 sig_freq_dft = get_filter_lp1(sig_freq_dft, f, fn_lp1, n_freq);
