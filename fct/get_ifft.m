@@ -1,10 +1,10 @@
 function sig_time = get_ifft(sig_freq, n_time)
 %GET_IFFT Get the IFFT of a vector (or matrix of row vectors).
-%   sig_freq - matrix of row frequency vectors  (matrix / double)
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
 %   n_time - number of time samples (scalar / integer / empty for default value)
-%   sig_time - matrix of row time vectors  (matrix / double)
+%   sig_time - matrix with time domain signals  (matrix / double)
 %
-%   This code can make the IFFT of a row vector or a matrix (of row vectors).
+%   The signals are represented as a row vector or a matrix (of row vectors).
 %   Unlike the MATLAB IFFT function, the function:
 %       - accept that the frequency vector are scaled (peak value) Fourier series coefficients
 %       - accept that the frequency vector is ordered [DC, AC_1, AC_2, AC_3, ...]

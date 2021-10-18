@@ -1,10 +1,10 @@
 function sig_freq = get_filter_lp1(sig_freq, f, fn, n_freq)
-%GET_FILTER_LP_1 Apply a first-order low-pass to a frequency signal.
-%   sig_freq - matrix of row frequency vectors  (matrix / double)
-%   f - fundamental frequency of the PWM signal (scalar / double)
-%   fn - corner frequency of the first-order low-pass (scalar / double)
+%GET_FILTER_LP_1 Apply a first-order low-pass to frequency signals.
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
+%   f - fundamental frequency of the PWM signal (vector / double)
+%   fn - corner frequency of the first-order low-pass (vector / double)
 %   n_freq - number of frequency (scalar / integer)
-%   sig_freq - matrix of row frequency vectors  (matrix / double)
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
 %
 %   The function can be used in order to avoid Gibbs phenomenon with
 %   discontinuous signal (ensuring continuity);

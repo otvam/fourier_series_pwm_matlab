@@ -16,16 +16,16 @@ addpath('fct');
 %% parameters
 n_time = 100; % number of time samples
 n_freq = 5; % number of time frequencies
+n_sig = 1; % number of signals
 
 f = 50; % fundamental frequency of the PWM signal
 t_delay = 1e-3; % time delay to be added to the signal
 phase = pi./6; % phase to be added to the signal
 
 %% create a frequency domain signal
-sig_freq_dc = get_dft_sin(0, 1.0, NaN, n_freq);
-sig_freq_ac_1 = get_dft_sin(1, 2.0, +pi./2, n_freq);
-sig_freq_ac_2 = get_dft_sin(2, 0.5, -pi./2, n_freq);
-sig_freq = sig_freq_dc+sig_freq_ac_1+sig_freq_ac_2;
+sig_freq_ac = get_dft_sin(1, 1, 0, n_sig, n_freq);
+sig_freq_dc = get_dft_sin(0, 1, NaN, n_sig, n_freq);
+sig_freq = sig_freq_ac+sig_freq_dc;
 
 %% get time vector
 t_vec = get_t_vec(f, n_time);

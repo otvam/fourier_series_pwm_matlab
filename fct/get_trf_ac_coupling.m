@@ -1,6 +1,6 @@
 function sig_freq = get_trf_ac_coupling(sig_freq)
-%GET_TRF_AC_COUPLING Remove the DC component of a frequency domain signal.
-%   sig_freq - matrix of row frequency vectors  (matrix / double)
+%GET_TRF_AC_COUPLING Remove the DC component of frequency domain signals.
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
 %
 %   See also GET_TRF_PHASE, GET_TRF_DELAY.
 

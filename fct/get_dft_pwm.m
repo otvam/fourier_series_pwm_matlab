@@ -1,17 +1,19 @@
-function sig_freq = get_dft_pwm(d_vec, v_vec, dr_vec, n_freq)
+function sig_freq = get_dft_pwm(d_pts, v_pts, dr_pts, n_pts, n_sig, n_freq)
 %GET_DFT_PWM Get the Fourier series of a PWM signal with finite rise time.
-%   d_vec - duty cycles where a switching transition is happening (row vector / double)
-%   v_vec - values of the signal after the switching transition (row vector / double)
-%   dr_vec - durations of the switching transition (row vector / double)
+%   d_pts - duty cycles where a switching transition is happening (matrix / double)
+%   v_pts - values of the signal after the switching transitions (matrix / double)
+%   dr_pts - durations of the switching transitions (matrix / double)
+%   n_sig - number of signals to be generated (scalar / integer)
 %   n_freq - number of frequency (scalar / integer)
-%   sig_freq - row frequency vectors  (row vector / double)
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
 %
+%   The signals are represented as a row vector or a matrix (of row vectors).
 %   For generating the signal, this function uses relative timing data (duty cycle).
 %
 %   This code compute the Fourier series of a PWM signal:
 %       - arbitrary turn-on and turn-off times
 %       - arbitrary turn-on and turn-off values
-%       - finite rise time model (ramp model)
+%       - finite rise time model (ramp model) or perfect transition
 %       - generate the spectrum directly, no time domain signal is generated
 %
 %   The function is meant to match the GET_FFT transformation.
@@ -22,118 +24,117 @@ function sig_freq = get_dft_pwm(d_vec, v_vec, dr_vec, n_freq)
 %   Thomas Guillod.
 %   2020-2021 - BSD License.
 
-% extract the signal data
-assert(length(d_vec)==length(v_vec), 'invalid duty cycle: transition')
-assert(length(d_vec)==length(dr_vec), 'invalid duty cycle: transition')
-n_segment =  length(d_vec);
+% check the signal data
+assert(all(size(d_pts)==[n_sig n_pts]), 'invalid harmonics')
+assert(all(size(v_pts)==[n_sig n_pts]), 'invalid harmonics')
+assert(all(size(dr_pts)==[n_sig n_pts]), 'invalid harmonics')
 
 % extend the signal (signal is periodic)
-d_all_vec = [d_vec(1:end) d_vec(1)+1];
-dr_all_vec = [dr_vec(1:end) dr_vec(1)];
-v_all_vec = [v_vec(end) v_vec];
+d_all_pts = [d_pts(:,1:end) d_pts(:,1)+1];
+dr_all_pts = [dr_pts(:,1:end) dr_pts(:,1)];
+v_all_pts = [v_pts(:,end) v_pts(:,1:end)];
 
 % compute the switching instants (start and end)
-d_sw_vec = [];
-for i=1:n_segment
-    d_1 = d_all_vec(i);
-    d_2 = d_all_vec(i+1);
-    dr_1 = dr_all_vec(i);
-    dr_2 = dr_all_vec(i+1);
+d_sw_pts = [];
+for i=1:n_pts
+    d_1 = d_all_pts(:,i);
+    d_2 = d_all_pts(:,i+1);
+    dr_1 = dr_all_pts(:,i);
+    dr_2 = dr_all_pts(:,i+1);
 
-    d_sw_vec(end+1) = d_1+dr_1./2;
-    d_sw_vec(end+1) = d_2-dr_2./2;
+    d_sw_pts(:,end+1) = d_1+dr_1./2;
+    d_sw_pts(:,end+1) = d_2-dr_2./2;
 end
 
-% check data
-assert(all(dr_vec>=0), 'invalid duty cycle: transition')
-assert(all(dr_vec<=1), 'invalid duty cycle: transition')
-assert(all(d_vec>=0), 'invalid duty cycle: switching instant')
-assert(all(d_vec<=1), 'invalid duty cycle: switching instant')
-assert(all(diff(d_sw_vec)>=0), 'invalid duty cycle: signal sequence')
+% check duty cycle data
+assert(all(all(dr_pts>=0)), 'invalid duty cycle: transition')
+assert(all(all(dr_pts<=1)), 'invalid duty cycle: transition')
+assert(all(all(d_pts>=0)), 'invalid duty cycle: switching instant')
+assert(all(all(d_pts<=1)), 'invalid duty cycle: switching instant')
+assert(all(all(diff(d_sw_pts, 1, 2)>=0)), 'invalid duty cycle: signal sequence')
 
 % init data
-n_vec = (0:n_freq-1);
-sig_freq = zeros(1, n_freq);
+n_vec = get_f_vec(1, n_freq);
+sig_freq = zeros(n_sig, n_freq);
 
 % add the constant intervals
-for i=1:n_segment
-    d_1 = d_all_vec(i);
-    d_2 = d_all_vec(i+1);
-    dr_1 = dr_all_vec(i);
-    dr_2 = dr_all_vec(i+1);
-    v = v_vec(i);
+for i=1:n_pts
+    d_1 = d_all_pts(:,i);
+    d_2 = d_all_pts(:,i+1);
+    dr_1 = dr_all_pts(:,i);
+    dr_2 = dr_all_pts(:,i+1);
+    v = v_pts(:,i);
     
+    % get signal segment
     sig_tmp = coeff_cst(n_vec, d_1+dr_1./2, d_2-dr_2./2, v);
+    
+    % make superposition
     sig_freq = sig_freq+sig_tmp;
 end
 
 % add the transitions
-for i=1:n_segment
-    d = d_vec(i);
-    dr = dr_vec(i);
-    v_1 = v_all_vec(i);
-    v_2 = v_all_vec(i+1);
+for i=1:n_pts
+    d = d_pts(:,i);
+    dr = dr_pts(:,i);
+    v_1 = v_all_pts(:,i);
+    v_2 = v_all_pts(:,i+1);
     
-    if dr==0
-        sig_tmp = zeros(1, n_freq);
-    else
-        sig_tmp = coeff_ramp(n_vec, d, dr, v_1, v_2);
-    end
+    % get transition segment
+    sig_tmp = coeff_ramp(n_vec, d, dr, v_1, v_2);
+    
+    % perfect transitions can be ignored
+    idx_perfect = dr==0;
+    sig_tmp(idx_perfect,:) = 0;
+    
+    % make superposition
     sig_freq = sig_freq+sig_tmp;
 end
 
 end
 
-function vec = coeff_cst(n_vec, d_1, d_2, v)
+function sig_freq = coeff_cst(n_vec, d_1, d_2, v)
 %COEFF_CST Get the Fourier coefficients for a constant interval.
-%   vec = COEFF_CST(f, n_vec, d_1, d_2, v)
-%   f - fundamental frequency of the PWM signal (scalar / double)
-%   n_vec - vector with  indices of the coefficient (row vector / integer)
-%   d_1 - start time of the interval (scalar / double)
-%   d_2 - start time of the interval (scalar / double)
-%   v - value of the interval (scalar / double)
-%   vec - row frequency vectors  (row vector / double)
+%   n_vec - vector with  indices of the coefficient (vector / integer)
+%   d_1 - start time of the interval (vector / double)
+%   d_2 - start time of the interval (vector / double)
+%   v - value of the interval (vector / double)
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
 %
 %   The expression used in this function was extracted with a symbolic calculus software.
 
 % get the AC coefficients
-n_vec_ac = n_vec(2:end);
-num = 2.*((exp(-2.*pi.*1i.*n_vec_ac.*d_1)-exp(-2.*pi.*1i.*n_vec_ac.*d_2)));
-den = 2.*pi.*1i.*n_vec_ac;
-vec_ac = num./den;
+num = 2.*((exp(-2.*pi.*1i.*n_vec.*d_1)-exp(-2.*pi.*1i.*n_vec.*d_2)));
+den = 2.*pi.*1i.*n_vec;
+sig_freq = num./den;
 
 % get the DC coefficient
-vec_dc = d_2-d_1;
+idx_dc = n_vec==0;
+sig_freq(:,idx_dc) = d_2-d_1;
 
-% assemble and scale
-vec = v.*[vec_dc vec_ac];
+% scale the value
+sig_freq = v.*sig_freq;
 
 end
 
-function vec = coeff_ramp(n_vec, d, dr, v_1, v_2)
+function sig_freq = coeff_ramp(n_vec, d, dr, v_1, v_2)
 %COEFF_RAMP Get the Fourier coefficients for a transition interval.
-%   vec = COEFF_RAMP(f, n_vec, t, tr, v_1, v_2)
-%   f - fundamental frequency of the PWM signal (scalar / double)
-%   n_vec - vector with  indices of the coefficient (row vector / integer)
-%   t - time of the transition (scalar / double)
-%   tr - duration of the transition (scalar / double)
-%   v_1 - start value of the transition (scalar / double)
-%   v_2 - end value of the transition (scalar / double)
-%   vec - row frequency vectors  (row vector / double)
+%   n_vec - vector with  indices of the coefficient (vector / integer)
+%   d - instant of the transition (vector / double)
+%   dr - duration of the transition (vector / double)
+%   v_1 - start value of the transition (vector / double)
+%   v_2 - end value of the transition (vector / double)
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
 %
 %   The expression used in this function was extracted with a symbolic calculus software.
 
 % get the AC coefficients
-n_vec_ac = n_vec(2:end);
-num_1 = 2.*(exp(-2.*pi.*1i.*n_vec_ac.*(d-dr./2)).*(v_1-v_2-2.*pi.*1i.*n_vec_ac.*dr.*v_1));
-num_2 = 2.*(exp(-2.*pi.*1i.*n_vec_ac.*(d+dr./2)).*(v_1-v_2-2.*pi.*1i.*n_vec_ac.*dr.*v_2));
-den = 4.*pi.^2.*n_vec_ac.^2.*dr;
-vec_ac = (num_1-num_2)./den;
+num_1 = 2.*(exp(-2.*pi.*1i.*n_vec.*(d-dr./2)).*(v_1-v_2-2.*pi.*1i.*n_vec.*dr.*v_1));
+num_2 = 2.*(exp(-2.*pi.*1i.*n_vec.*(d+dr./2)).*(v_1-v_2-2.*pi.*1i.*n_vec.*dr.*v_2));
+den = 4.*pi.^2.*n_vec.^2.*dr;
+sig_freq = (num_1-num_2)./den;
 
 % get the DC coefficient
-vec_dc = ((v_1+v_2)./2).*dr;
-
-% assemble
-vec = [vec_dc vec_ac];
+idx_dc = n_vec==0;
+sig_freq(:,idx_dc) = ((v_1+v_2)./2).*dr;
 
 end

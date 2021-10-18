@@ -1,10 +1,10 @@
 function sig_freq = get_fft(sig_time, n_freq)
 %GET_FFT Get the FFT of a real vector (or matrix of row vectors).
-%   sig_time - matrix of row time vectors  (matrix / double)
+%   sig_time - matrix with time domain signals  (matrix / double)
 %   n_freq - number of frequency (scalar / integer / empty for default value)
-%   sig_freq - matrix of row frequency vectors  (matrix / double)
+%   sig_freq - matrix with frequency domain signals  (matrix / double)
 %
-%   This code can make the FFT of a row vector or a matrix (of row vectors).
+%   The signals are represented as a row vector or a matrix (of row vectors).
 %   Unlike the MATLAB FFT function, the function:
 %       - scale the components as (peak value) Fourier series coefficients
 %       - order the components as [DC, AC_1, AC_2, AC_3, ...]
