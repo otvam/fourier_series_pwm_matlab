@@ -15,7 +15,7 @@ addpath('fct');
 
 %% parameters
 n_time = 1e3; % number of time samples
-n_freq = 50; % number of time frequencies
+n_freq = 40; % number of time frequencies
 n_sig = 2; % number of signals
 n_pts = 3; % number of pwm points
 
@@ -25,8 +25,8 @@ d_pts = [0.25 0.5 0.75 ; 0.15 0.5 0.85]; % duty cycle matrix
 v_pts = [+5.0 -3.0 -2.0 ; -5.0 +3.0 +2.0]; % signal value vector
 dr_pts = [0.05 0.05 0.1 ; 0.1 0.0 0.05]; % rise time vector
 
-fn_lp1 = 3e3; % corner frequency of the first-order low-pass applied to the signal
-fn_lp2 = 3e3; % corner frequency of the second-order low-pass applied to the signal
+fn_lp1 = 1e3; % corner frequency of the first-order low-pass applied to the signal
+fn_lp2 = 1e3; % corner frequency of the second-order low-pass applied to the signal
 ksi_lp2 = 0.6; % damping of the second-order low-pass applied to the signal
 
 %% get time and frequency vector

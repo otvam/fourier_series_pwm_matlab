@@ -21,8 +21,9 @@ Additionally, several transformations can be applied to frequency domain signals
 ## Examples
 
 <p float="middle">
-    <img src="readme_img/example_simple.png" width="400">
-    <img src="readme_img/example_pwm.png" width="400">
+    <img src="readme_img/example_sin.png" width="250">
+    <img src="readme_img/example_pwm.png" width="20">
+    <img src="readme_img/example_transform.png" width="20">
 </p>
 
 ## Compatibility
