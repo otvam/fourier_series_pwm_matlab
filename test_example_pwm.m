@@ -2,7 +2,6 @@ function test_example_pwm()
 %TEST_EXAMPLE_PWM Example for DFT/FFT/IFFT with PWM signals.
 %
 %   Create PWM signals in frequency domain.
-%   Apply low pass filters to the signals.
 %   Compute the IFFT.
 %   Compute the FFT.
 %   Compare the orginal signals with the IFFT/FFT reconstructions.

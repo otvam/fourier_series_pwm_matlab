@@ -1,7 +1,7 @@
 function test_example_sin()
 %TEST_EXAMPLE_SIMPLE Example for FFT/IFFT with sinusoidal signals.
 %
-%   Define arbitrary frequency domain signals.
+%   Create arbitrary frequency domain signals.
 %   Compute the IFFT.
 %   Compute the FFT.
 %   Compare the orginal signals with the IFFT/FFT reconstructions.
